@@ -34,17 +34,17 @@ stages:
 #Publish Artifact
 #Copy the files to Staging Directory
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: '**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'manifests'
-      publishLocation: 'Container'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'manifests'
+          publishLocation: 'Container'
 
 #Deploy to K8S
 #Kubernetes apply
@@ -58,20 +58,20 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
 
-  - task: DownloadPipelineArtifact@2
-    inputs:
-      buildType: 'current'
-      artifactName: 'manifests'
-      itemPattern: '**/*.yaml'
-      targetPath: '$(System.ArtifactsDirectory)'
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'manifests'
+        itemPattern: '**/*.yaml'
+        targetPath: '$(System.ArtifactsDirectory)'
 
-  - task: KubernetesManifest@0
-    inputs:
-      action: 'deploy'
-      kubernetesServiceConnection: 'aws-k8s-service-connection'
-      namespace: 'default'
-      manifests: '''$(System.ArtifactsDirectory)''/configuration/kubernetes/deployment.yaml'
-      containers: grpandurangi/learnazuredevopsdocker:$(tag)
+    - task: KubernetesManifest@0
+      inputs:
+        action: 'deploy'
+        kubernetesServiceConnection: 'aws-k8s-service-connection'
+        namespace: 'default'
+        manifests: '''$(System.ArtifactsDirectory)''/configuration/kubernetes/deployment.yaml'
+        containers: grpandurangi/learnazuredevopsdocker:$(tag)
 
 
 
