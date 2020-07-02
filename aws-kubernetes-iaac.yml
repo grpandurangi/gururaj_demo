@@ -18,6 +18,6 @@ steps:
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aws/kubernetes'
     backendServiceAWS: 'aws-service-connection'
-    backendAWSBucketName: 'grpandurangi-s3-backend'
+    backendAWSBucketName: 'grpandurangi-s3-backend-terraform'
     backendAWSKey: 'grpandurangi'
 
