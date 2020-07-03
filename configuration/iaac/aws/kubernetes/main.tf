@@ -30,11 +30,11 @@ module "my-eks-cluster" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "grpandurangi-cluster"
   cluster_version = "1.15"
-  subnets         = ["subnet-8a1e7def", "subnet-9fa72eb5"] #CHANGE
+  subnets         = ["subnet-04b58a417263aa366", "subnet-06c99d7e34140b87c"] #CHANGE
   #subnets = data.aws_subnet_ids.subnets.ids
-  vpc_id          = aws_default_vpc.default.id
+  #vpc_id          = aws_default_vpc.default.id
 
-  #vpc_id         = "vpc-018b2b3cc61de2156"
+  vpc_id         = "vpc-018b2b3cc61de2156"
 
   node_groups = [
     {
